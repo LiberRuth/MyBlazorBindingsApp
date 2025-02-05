@@ -1,0 +1,61 @@
+﻿@page "/main"
+
+@inject INavigation NavigationManager
+
+<ContentPage>
+    <StackLayout>
+        <VerticalStackLayout Spacing="25"
+                             Padding="new(30,0)"
+                             VerticalOptions="LayoutOptions.Center">
+
+            <Image Source="dotNetBotSource"
+                   HeightRequest="200" />
+
+            <Label Text="Hello, World!"
+                   FontSize="32"
+                   HorizontalOptions="LayoutOptions.Center" />
+
+            <Label Text="Welcome to .NET Multi-platform App UI"
+                   FontSize="18"
+                   HorizontalOptions="LayoutOptions.Center" />
+
+            <Button Text="@ButtonText"
+                    HorizontalOptions="LayoutOptions.Center"
+                    OnClick="OnCounterClicked" />
+
+            <Button Text="페이지 이동"
+                    OnClick="OpenContactPage" />
+
+            <Label HorizontalOptions="LayoutOptions.Center">== "@ButtonText" == </Label>
+
+            <Entry HorizontalOptions="LayoutOptions.Center" @bind-Text="inputText" />
+
+            <Label HorizontalOptions="LayoutOptions.Center">== "@inputText" == </Label>
+        </VerticalStackLayout>
+    </StackLayout>
+</ContentPage>
+
+@code
+{
+    ImageSource dotNetBotSource = ImageSource.FromFile("dotnet_bot.png");
+
+    int count = 0;
+    string inputText = "default text";
+
+    string ButtonText => count switch
+    {
+        0 => "Click me",
+        1 => $"Clicked 1 time",
+        _ => $"Clicked {count} times"
+    };
+
+    void OnCounterClicked()
+    {
+        count++;
+    }
+
+    async Task OpenContactPage()
+    {
+        await NavigationManager.NavigateToAsync("/contact");
+    }
+}
